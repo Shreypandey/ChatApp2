@@ -1,10 +1,12 @@
 package sample;
 
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
+import javafx.scene.control.TextField;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -18,6 +20,8 @@ public class Chat {
     volatile static ObjectInputStream ois=null;
     @FXML
     ListView chatView;
+    @FXML
+    TextField textarea;
 
     List<String> chat=new ArrayList<String>();
 
@@ -31,6 +35,14 @@ public class Chat {
                 System.out.println(Main.socket);
                 while (Main.socket==null);
                 System.out.println(Main.socket);
+                try {
+                    Chat.oos=new ObjectOutputStream(Main.socket.getOutputStream());
+                    Chat.ois=new ObjectInputStream(Main.socket.getInputStream());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+
                 while (true){
                     String msg=recieveMessage();
                     System.out.println(msg);
@@ -57,7 +69,7 @@ public class Chat {
         }
     }
 
-    public String recieveMessage(){
+    public static String recieveMessage(){
         if (ois==null) {
             try {
                 ois=new ObjectInputStream(Main.socket.getInputStream());
@@ -75,6 +87,22 @@ public class Chat {
     }
 
     public void sendClicked(ActionEvent actionEvent) {
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                String msg=textarea.getText();
+                chat.add(msg);
+                chatView.getItems().setAll(chat);
+                textarea.setText("");
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        sendMessage(msg);
+                    }
+                }).start();
+            }
+        });
+
 
     }
 }
