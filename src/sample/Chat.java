@@ -46,6 +46,8 @@ public class Chat {
                 while (true){
                     String msg=recieveMessage();
                     System.out.println(msg);
+                    if(msg==null)
+                        break;
                     chat.add(msg);
                     chatView.getItems().setAll(chat);
                 }
@@ -82,6 +84,7 @@ public class Chat {
             msg= (String) ois.readObject();
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
+            return null;
         }
         return msg;
     }
