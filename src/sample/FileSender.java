@@ -8,12 +8,15 @@ import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 import java.nio.channels.SocketChannel;
 
+/**
+ * Class for sending file between two machines
+ */
 public class FileSender {
 
     /**
      * Establishes a socket channel connection
-     *
-     * @return
+     * @param ip IP Address of the Machine receiving the file
+     * @return SocketChannel object after connection is made
      */
     public SocketChannel createChannel(String ip) {
 
@@ -30,7 +33,11 @@ public class FileSender {
         return socketChannel;
     }
 
-
+    /**
+     * Method to send file between two machine
+     * @param socketChannel SocketChannel object across which file is sent
+     * @return String response denoting SUCCESS or FAILED
+     */
     public String sendFile(SocketChannel socketChannel) {
         RandomAccessFile aFile = null;
         try {
@@ -58,7 +65,6 @@ public class FileSender {
             e.printStackTrace();
         }
         return "SUCCESS";
-
     }
 
 }

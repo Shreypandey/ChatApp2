@@ -15,6 +15,9 @@ import java.nio.channels.SocketChannel;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Controller Class for Chat scene
+ */
 public class Chat {
 
     volatile static ObjectOutputStream oos=null;
@@ -26,6 +29,10 @@ public class Chat {
 
     List<String> chat=new ArrayList<String>();
 
+    /**
+     * Method to initialize the chat between
+     * two clients
+     */
     public void initialize(){
         chatView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         chatView.getItems().setAll(chat);
@@ -70,6 +77,10 @@ public class Chat {
         }).start();
     }
 
+    /**
+     * Method to send message between machine
+     * @param msg Message to send across machine
+     */
     public void sendMessage(String msg){
         if (oos==null) {
             try {
@@ -86,6 +97,10 @@ public class Chat {
         }
     }
 
+    /**
+     * Method to receive message across the network
+     * @return String object of the message
+     */
     public static String recieveMessage(){
         if (ois==null) {
             try {
@@ -104,6 +119,11 @@ public class Chat {
         return msg;
     }
 
+    /**
+     * Method invoked when send button is clicked
+     * @param actionEvent
+     */
+    @FXML
     public void sendClicked(ActionEvent actionEvent) {
         Platform.runLater(new Runnable() {
             @Override
@@ -120,10 +140,13 @@ public class Chat {
                 }).start();
             }
         });
-
-
     }
 
+    /**
+     * Method invoked when send file button is clicked
+     * @param actionEvent
+     */
+    @FXML
     public void sendFileClicked(ActionEvent actionEvent) {
         Platform.runLater(new Runnable() {
             @Override

@@ -10,8 +10,17 @@ import java.nio.channels.FileChannel;
 import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
 
+/**
+ * Class for receiving File between two machines
+ */
 public class FileReceiver {
+
     ServerSocketChannel serverSocketChannel;
+
+    /**
+     * Method for creating ServerSocketChannel to receive file across network
+     * @return SocketChannel Object created to share file between two machines
+     */
     public SocketChannel createServerSocketChannel() {
 
         SocketChannel socketChannel = null;
@@ -33,9 +42,9 @@ public class FileReceiver {
     }
 
     /**
-     * Reads the bytes from socket and writes to file
-     *
-     * @param socketChannel
+     * Method to read file from Socket Channel and write to a local file
+     * @param socketChannel SocketChannel object across which file is received
+     * @return String response denoting SUCCESS or FAILED
      */
     public String readFileFromSocket(SocketChannel socketChannel) {
         RandomAccessFile aFile = null;

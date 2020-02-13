@@ -10,14 +10,13 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextInputDialog;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-
-import javax.swing.*;
-import java.io.File;
 import java.io.IOException;
 import java.net.*;
-import java.nio.channels.SocketChannel;
 import java.util.Enumeration;
 
+/**
+ * Controller class for Start Page
+ */
 public class Controller {
 
     @FXML
@@ -25,6 +24,11 @@ public class Controller {
     @FXML
     Button recieveButton;
 
+    /**
+     * Method invoked when Send button is clicked
+     * Application can work as a sender application
+     * @param actionEvent
+     */
     public void sendPerform(ActionEvent actionEvent) {
         Platform.runLater(new Runnable() {
             @Override
@@ -59,6 +63,11 @@ public class Controller {
 
     }
 
+    /**
+     * Method invoked when Receive button is clicked
+     * Application can work as a receiver application
+     * @param actionEvent
+     */
     public void recievePerform(ActionEvent actionEvent) {
         Platform.runLater(new Runnable() {
             @Override
