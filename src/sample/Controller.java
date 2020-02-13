@@ -2,7 +2,13 @@ package sample;
 
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextInputDialog;
+import javafx.stage.Stage;
 
 import javax.swing.*;
 import java.io.IOException;
@@ -10,6 +16,12 @@ import java.net.*;
 import java.util.Enumeration;
 
 public class Controller {
+
+    @FXML
+    Button sendButton;
+    @FXML
+    Button recieveButton;
+
     public void sendPerform(ActionEvent actionEvent) {
         Platform.runLater(new Runnable() {
             @Override
@@ -18,12 +30,17 @@ public class Controller {
                 textInputDialog.setHeaderText("Enter IP Address");
                 textInputDialog.showAndWait();
                 String ip=textInputDialog.getEditor().getText();
-                try {
-                    Main.socket=new Socket(ip,6969);
-                    System.out.println("Connected");
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            Main.socket=new Socket(ip,6969);
+                            System.out.println("Connected");
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }).start();
             }
         });
 
@@ -63,6 +80,15 @@ public class Controller {
                                 e.printStackTrace();
                             }
                             System.out.println("Connected");
+                            Stage primaryStage = (Stage) recieveButton.getScene().getWindow();
+                            Parent root = null;
+                            try {
+
+                                root = FXMLLoader.load(getClass().getResource("reg.fxml"));
+                            }catch(IOException e){
+                                e.printStackTrace();
+                            }
+                            primaryStage.setScene(new Scene(root, 1081, 826));
                         }
                     }).start();
                 } catch (IOException e) {
