@@ -43,19 +43,28 @@ public class Controller {
                         // drop inactive
                         if (!networkInterface.isUp())
                             continue;
-
+                        if (!networkInterface.getDisplayName().equals("wlo1"))continue;
                         // smth we can explore
                         Enumeration<InetAddress> addresses = networkInterface.getInetAddresses();
                         while(addresses.hasMoreElements()) {
                             addr = addresses.nextElement();
-                            if (!networkInterface.getDisplayName().equals("wlo1"))continue;
+
                             if (InetAddress.getByName(addr.getCanonicalHostName()) instanceof Inet6Address)continue;
 
                             System.out.println("Waiting to connect to ip :"+addr.getCanonicalHostName());
                         }
                     }
-                    Main.socket=Main.serverSocket.accept();
-                    System.out.println("Connected");
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                Main.socket=Main.serverSocket.accept();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                            System.out.println("Connected");
+                        }
+                    }).start();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
