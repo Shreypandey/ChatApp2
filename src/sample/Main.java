@@ -11,8 +11,8 @@ import java.net.Socket;
 
 public class Main extends Application {
 
-    public static ServerSocket serverSocket;
-    public static Socket socket;
+    public volatile static ServerSocket serverSocket;
+    public volatile static Socket socket;
     @Override
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));

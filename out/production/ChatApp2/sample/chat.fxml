@@ -23,7 +23,7 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0"  xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Chat">
+<AnchorPane prefHeight="400.0" prefWidth="600.0"  xmlns="http://javafx.com/javafx/" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Chat">
 
         <ScrollPane prefHeight="Infinity" prefWidth="Infinity">
                     <content>
@@ -33,7 +33,7 @@
                                 <HBox layoutY="350.0" prefHeight="100.0" prefWidth="600.0">
                                     <children>
                                         <TextField fx:id="textarea" prefHeight="50.0" prefWidth="500.0" />
-                                        <Button fx:id="send" mnemonicParsing="false" prefHeight="50.0" prefWidth="99.0" text="Send" />
+                                        <Button fx:id="send" mnemonicParsing="false" prefHeight="50.0" prefWidth="99.0" text="Send" onAction="#sendClicked" />
                                     </children>
                                 </HBox>
                             </children>
