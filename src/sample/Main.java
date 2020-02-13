@@ -7,10 +7,12 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.net.ServerSocket;
+import java.net.Socket;
 
 public class Main extends Application {
 
     public static ServerSocket serverSocket;
+    public static Socket socket;
     @Override
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));

@@ -18,7 +18,12 @@ public class Controller {
                 textInputDialog.setHeaderText("Enter IP Address");
                 textInputDialog.showAndWait();
                 String ip=textInputDialog.getEditor().getText();
-                
+                try {
+                    Main.socket=new Socket(ip,6969);
+                    System.out.println("Connected");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         });
 
@@ -49,6 +54,8 @@ public class Controller {
                             System.out.println("Waiting to connect to ip :"+addr.getCanonicalHostName());
                         }
                     }
+                    Main.socket=Main.serverSocket.accept();
+                    System.out.println("Connected");
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
