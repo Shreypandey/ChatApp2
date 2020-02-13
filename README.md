@@ -2,7 +2,7 @@
 A Simple JavaFx based Application used to share files and send messages across a common LAN network.
 This Application works on the principle of Socket Programming.
 
-####Usage Instructions :
+####Usage Instructions : ####
 1. Install Latest Version of JavaSE and JavaFx and also set the runtime arguments to run JavaFX applications.
 2. Run the application on Receiver side.
 3. Click Receive option on start screen. This makes the application works as a receiver.
