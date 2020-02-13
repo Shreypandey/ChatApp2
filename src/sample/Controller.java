@@ -8,11 +8,14 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextInputDialog;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import javax.swing.*;
+import java.io.File;
 import java.io.IOException;
 import java.net.*;
+import java.nio.channels.SocketChannel;
 import java.util.Enumeration;
 
 public class Controller {
@@ -41,7 +44,9 @@ public class Controller {
                         }
                     }
                 }).start();
+                FileChooser fileChooser = new FileChooser();
                 Stage primaryStage = (Stage) sendButton.getScene().getWindow();
+                Main.selectedFile = fileChooser.showOpenDialog(primaryStage);
                 Parent root = null;
                 try {
                     root = FXMLLoader.load(getClass().getResource("chat.fxml"));
@@ -60,6 +65,7 @@ public class Controller {
             public void run() {
                 try {
                     Main.serverSocket=new ServerSocket(6969);
+                    Main.nioServer = new FileReceiver();
                     InetAddress localhost = (InetAddress) InetAddress.getLocalHost();
                     Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces();
                     InetAddress addr;
@@ -84,6 +90,7 @@ public class Controller {
                         public void run() {
                             try {
                                 Main.socket=Main.serverSocket.accept();
+
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }

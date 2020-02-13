@@ -11,6 +11,7 @@ import javafx.scene.control.TextField;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.nio.channels.SocketChannel;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,15 +43,29 @@ public class Chat {
                     e.printStackTrace();
                 }
 
-
                 while (true){
                     String msg=recieveMessage();
                     System.out.println(msg);
                     if(msg==null)
                         break;
                     chat.add(msg);
-                    chatView.getItems().setAll(chat);
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            chatView.getItems().setAll(chat);
+                        }
+                    });
                 }
+            }
+        }).start();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                System.out.println(Main.socket);
+                while (Main.socket==null);
+                System.out.println(Main.socket);
+                SocketChannel socketChannel=Main.nioServer.createServerSocketChannel();
+                Main.nioServer.readFileFromSocket(socketChannel);
             }
         }).start();
     }
@@ -93,7 +108,7 @@ public class Chat {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                String msg=textarea.getText();
+                String msg=Main.username+":\t"+textarea.getText();
                 chat.add(msg);
                 chatView.getItems().setAll(chat);
                 textarea.setText("");
@@ -107,5 +122,24 @@ public class Chat {
         });
 
 
+    }
+
+    public void sendFileClicked(ActionEvent actionEvent) {
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        FileSender nioClient = new FileSender();
+                        System.out.println("File sender initialised");
+                        SocketChannel socketChannel = nioClient.createChannel(Main.socket.getInetAddress().getCanonicalHostName());
+                        System.out.println("Channel created");
+                        System.out.println("Transfer starting");
+                        nioClient.sendFile(socketChannel);
+                    }
+                }).start();
+            }
+        });
     }
 }

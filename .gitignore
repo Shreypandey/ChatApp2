@@ -40,7 +40,7 @@ hs_err_pid*
  
 log/
 
-
+out/
 jsonFiles/
 
 Test.java
