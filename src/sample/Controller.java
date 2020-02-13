@@ -41,6 +41,14 @@ public class Controller {
                         }
                     }
                 }).start();
+                Stage primaryStage = (Stage) sendButton.getScene().getWindow();
+                Parent root = null;
+                try {
+                    root = FXMLLoader.load(getClass().getResource("chat.fxml"));
+                }catch(IOException e){
+                    e.printStackTrace();
+                }
+                primaryStage.setScene(new Scene(root, 600, 400));
             }
         });
 
@@ -80,17 +88,16 @@ public class Controller {
                                 e.printStackTrace();
                             }
                             System.out.println("Connected");
-                            Stage primaryStage = (Stage) recieveButton.getScene().getWindow();
-                            Parent root = null;
-                            try {
-
-                                root = FXMLLoader.load(getClass().getResource("reg.fxml"));
-                            }catch(IOException e){
-                                e.printStackTrace();
-                            }
-                            primaryStage.setScene(new Scene(root, 1081, 826));
                         }
                     }).start();
+                    Stage primaryStage = (Stage) recieveButton.getScene().getWindow();
+                    Parent root = null;
+                    try {
+                        root = FXMLLoader.load(getClass().getResource("chat.fxml"));
+                    }catch(IOException e){
+                        e.printStackTrace();
+                    }
+                    primaryStage.setScene(new Scene(root, 600, 400));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
